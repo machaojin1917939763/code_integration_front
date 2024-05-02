@@ -98,4 +98,48 @@ declare namespace API {
     description?: string;
     type?: NoticeIconItemType;
   };
+
+  type DeveloperInfoItem = {
+    key?: number;
+    name?: string; // 开发人员姓名
+    gender?: 'male' | 'female' | 'other'; // 性别，这个字段是 Object 类型，但通常我们会用字符串或枚举来表示性别
+    department?: string; // 部门
+    position?: string; // 职位
+    phone?: string; // 电话
+    email?: string; // 邮件
+    projectId?: number; // 项目ID
+    bugId?: number; // BUG ID
+    score?: number; // 积分
+    creator?: string; // 创建者
+    createdAt?: string; // 创建时间，根据实际情况可能需要更改为 Date 类型或其他
+    updater?: string; // 更新者
+    updatedAt?: string; // 更新时间，根据实际情况可能需要更改为 Date 类型或其他
+  };
+
+  type IssueTrackerItem = {
+    key?: number;
+    issueType?: string; // 问题类型
+    description?: string; // 问题描述
+    resolver?: string; // 问题解决人
+    score?: number; // 问题分数
+    isResolved?: number; // 是否解决
+    creator?: string; // 创建者
+    createdAt?: string; // 创建时间，根据实际情况可能需要更改为 Date 类型或其他
+    updater?: string; // 更新者
+    updatedAt?: string; // 更新时间，根据实际情况可能需要更改为 Date 类型或其他
+  };
+  type ProjectItem = {
+    key?: number;
+    name?: string; // 项目名称
+    url?: string; // 项目地址
+    type?: string; // 项目类型
+    responsiblePerson?: string; // 项目负责人
+    issueCount?: number; // 项目问题数
+    issueId?: number; // 问题ID
+    developerId?: number; // 开发人员表ID
+    creator?: string; // 创建者
+    createdAt?: string; // 创建时间，根据实际情况可能需要更改为 Date 类型或其他
+    updater?: string; // 更新者
+    updatedAt?: string; // 更新时间，根据实际情况可能需要更改为 Date 类型或其他
+  };
 }

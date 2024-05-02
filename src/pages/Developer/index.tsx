@@ -1,122 +1,94 @@
-import { EllipsisOutlined, PlusOutlined } from '@ant-design/icons';
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { EllipsisOutlined, SearchOutlined } from '@ant-design/icons';
+import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable, TableDropdown } from '@ant-design/pro-components';
-import { Button, Dropdown, Space, Tag } from 'antd';
-import { useRef } from 'react';
-import request from 'umi-request';
-export const waitTimePromise = async (time: number = 100) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, time);
-  });
-};
+import { Button, Dropdown, Input } from 'antd';
+import { getDeveloperList } from './../../services/ant-design-pro/developer'
+import { PageContainer } from '@ant-design/pro-components';
 
-export const waitTime = async (time: number = 100) => {
-  await waitTimePromise(time);
-};
 
-type GithubIssueItem = {
-  url: string;
-  id: number;
-  number: number;
-  title: string;
-  labels: {
-    name: string;
-    color: string;
-  }[];
-  state: string;
-  comments: number;
-  created_at: string;
-  updated_at: string;
-  closed_at?: string;
-};
 
-const columns: ProColumns<GithubIssueItem>[] = [
+const columns: ProColumns<API.DeveloperInfoItem>[] = [
   {
+    title: '排序',
     dataIndex: 'index',
     valueType: 'indexBorder',
     width: 48,
+
   },
   {
-    title: '标题',
-    dataIndex: 'title',
-    copyable: true,
-    ellipsis: true,
-    tooltip: '标题过长会自动收缩',
-    formItemProps: {
-      rules: [
-        {
-          required: true,
-          message: '此项为必填项',
-        },
-      ],
-    },
+    title: '姓名',
+    dataIndex: 'name',
   },
   {
-    disable: true,
-    title: '状态',
-    dataIndex: 'state',
-    filters: true,
-    onFilter: true,
-    ellipsis: true,
+    title: '性别',
+    dataIndex: 'gender',
     valueType: 'select',
     valueEnum: {
-      all: { text: '超长'.repeat(50) },
-      open: {
-        text: '未解决',
-        status: 'Error',
-      },
-      closed: {
-        text: '已解决',
-        status: 'Success',
-        disabled: true,
-      },
-      processing: {
-        text: '解决中',
-        status: 'Processing',
-      },
+      male: { text: '男' },
+      female: { text: '女' },
+      other: { text: '其他' },
     },
   },
   {
-    disable: true,
-    title: '标签',
-    dataIndex: 'labels',
-    search: false,
-    renderFormItem: (_, { defaultRender }) => {
-      return defaultRender(_);
-    },
-    render: (_, record) => (
-      <Space>
-        {record.labels.map(({ name, color }) => (
-          <Tag color={color} key={name}>
-            {name}
-          </Tag>
-        ))}
-      </Space>
-    ),
+    title: '部门',
+    dataIndex: 'department',
+    ellipsis: true,
   },
   {
-    title: '创建时间',
-    key: 'showTime',
-    dataIndex: 'created_at',
-    valueType: 'date',
+    title: '职位',
+    dataIndex: 'position',
+    ellipsis: true,
+  },
+  {
+    title: '电话',
+    dataIndex: 'phone',
+  },
+  {
+    title: '邮件',
+    dataIndex: 'email',
+  },
+  {
+    title: '项目ID',
+    dataIndex: 'projectId',
+    valueType: 'digit',
+    hideInSearch: true,
+  },
+  {
+    title: 'BUG ID',
+    dataIndex: 'bugId',
+    valueType: 'digit',
+    hideInSearch: true,
+  },
+  {
+    title: '积分',
+    dataIndex: 'score',
+    valueType: 'digit',
     sorter: true,
     hideInSearch: true,
   },
   {
+    title: '创建者',
+    dataIndex: 'creator',
+    ellipsis: true,
+  },
+  {
     title: '创建时间',
-    dataIndex: 'created_at',
-    valueType: 'dateRange',
-    hideInTable: true,
-    search: {
-      transform: (value) => {
-        return {
-          startTime: value[0],
-          endTime: value[1],
-        };
-      },
-    },
+    dataIndex: 'createdAt',
+    valueType: 'dateTime',
+    sorter: true,
+    hideInSearch: true,
+  },
+  {
+    title: '更新者',
+    dataIndex: 'updater',
+    ellipsis: true,
+  },
+  {
+    title: '更新时间',
+    dataIndex: 'updatedAt',
+    valueType: 'dateTime',
+    sorter: true,
+    hideInSearch: true,
   },
   {
     title: '操作',
@@ -126,7 +98,7 @@ const columns: ProColumns<GithubIssueItem>[] = [
       <a
         key="editable"
         onClick={() => {
-          action?.startEditable?.(record.id);
+          action?.startEditable?.(record.name);
         }}
       >
         编辑
@@ -146,97 +118,82 @@ const columns: ProColumns<GithubIssueItem>[] = [
   },
 ];
 
+
 export default () => {
-  const actionRef = useRef<ActionType>();
   return (
-    <ProTable<GithubIssueItem>
-      columns={columns}
-      actionRef={actionRef}
-      cardBordered
-      request={async (params, sort, filter) => {
-        console.log(sort, filter);
-        await waitTime(2000);
-        return request<{
-          data: GithubIssueItem[];
-        }>('https://proapi.azurewebsites.net/github/issues', {
-          params,
-        });
-      }}
-      editable={{
-        type: 'multiple',
-      }}
-      columnsState={{
-        persistenceKey: 'pro-table-singe-demos',
-        persistenceType: 'localStorage',
-        defaultValue: {
-          option: { fixed: 'right', disable: true },
-        },
-        onChange(value) {
-          console.log('value: ', value);
-        },
-      }}
-      rowKey="id"
-      search={{
-        labelWidth: 'auto',
-      }}
-      options={{
-        setting: {
-          listsHeight: 400,
-        },
-      }}
-      form={{
-        // 由于配置了 transform，提交的参与与定义的不同这里需要转化一下
-        syncToUrl: (values, type) => {
-          if (type === 'get') {
+    <PageContainer>
+      <ProTable<API.DeveloperInfoItem>
+        columns={columns}
+        request={async (params, sorter, filter) => {
+          // 表单搜索项会从 params 传入，传递给后端接口。
+          console.log(params);
+          try {
+            // 假设 getDeveloperList 返回一个 Promise，其中包含请求的响应数据
+            const result = await getDeveloperList(params);
+            console.log(result);
+
+            // 根据你的结果结构，你可能需要调整这里的返回值
             return {
-              ...values,
-              created_at: [values.startTime, values.endTime],
+              data: result.result.records, // 假设响应中的数据在 data 属性中
+              success: result.result.success, // 假设成功状态在 success 属性中
+              total: result.result.total, // 如果有分页，你可能还需要返回 total
+            };
+          } catch (error) {
+            console.error(error);
+            return {
+              data: [],
+              success: false,
             };
           }
-          return values;
-        },
-      }}
-      pagination={{
-        pageSize: 5,
-        onChange: (page) => console.log(page),
-      }}
-      dateFormatter="string"
-      headerTitle="高级表格"
-      toolBarRender={() => [
-        <Button
-          key="button"
-          icon={<PlusOutlined />}
-          onClick={() => {
-            actionRef.current?.reload();
-          }}
-          type="primary"
-        >
-          新建
-        </Button>,
-        <Dropdown
-          key="menu"
-          menu={{
-            items: [
-              {
-                label: '1st item',
-                key: '1',
-              },
-              {
-                label: '2nd item',
-                key: '1',
-              },
-              {
-                label: '3rd item',
-                key: '1',
-              },
-            ],
-          }}
-        >
-          <Button>
-            <EllipsisOutlined />
-          </Button>
-        </Dropdown>,
-      ]}
-    />
+        }}
+        rowKey="key"
+        pagination={{
+          showQuickJumper: true,
+        }}
+        search={{
+          layout: 'vertical',
+          defaultCollapsed: false,
+        }}
+        dateFormatter="string"
+        toolbar={{
+          title: '开发人员信息表',
+          tooltip: '所有的开发人员',
+        }}
+        toolBarRender={() => [
+          <Button key="danger" danger>
+            危险按钮
+          </Button>,
+          <Button key="show">查看日志</Button>,
+          <Button type="primary" key="primary">
+            创建应用
+          </Button>,
+
+          <Dropdown
+            key="menu"
+            menu={{
+              items: [
+                {
+                  label: '1st item',
+                  key: '1',
+                },
+                {
+                  label: '2nd item',
+                  key: '2',
+                },
+                {
+                  label: '3rd item',
+                  key: '3',
+                },
+              ],
+            }}
+          >
+            <Button>
+              <EllipsisOutlined />
+            </Button>
+          </Dropdown>,
+        ]}
+      />
+    </PageContainer>
+
   );
 };
