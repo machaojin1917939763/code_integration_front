@@ -10,7 +10,6 @@ export const setAuthToken = (options?: { [key: string]: any }) => {
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
   }
-  console.log(headers);
 
   return { ...options, headers };
 };
