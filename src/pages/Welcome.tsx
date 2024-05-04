@@ -1,8 +1,16 @@
+import {
+  BarChartOutlined,
+  CheckCircleOutlined,
+  CodeOutlined,
+  IssuesCloseOutlined,
+  SecurityScanOutlined,
+  WarningOutlined,
+} from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { Card, theme } from 'antd';
 import React from 'react';
-
+import { ListComponent } from '../components/List';
 /**
  * 每个单独的卡片，为了复用样式抽成了组件
  * @param param0
@@ -10,13 +18,33 @@ import React from 'react';
  */
 const InfoCard: React.FC<{
   title: string;
-  index: number;
+  numberCore: string;
   desc: string;
-  href: string;
-}> = ({ title, href, index, desc }) => {
+}> = ({ title, numberCore, desc }) => {
   const { useToken } = theme;
 
   const { token } = useToken();
+
+  const getIcon = (title: string) => {
+    switch (title) {
+      case '安全':
+        return <SecurityScanOutlined style={{ color: '#3DA5F4' }} />;
+      case '可靠性':
+        return <IssuesCloseOutlined style={{ color: '#252B45' }} />;
+      case '可维护性':
+        return <CodeOutlined style={{ color: '#36B37E' }} />;
+      case '接受问题':
+        return <CheckCircleOutlined style={{ color: '#FF5630' }} />;
+      case '覆盖率':
+        return <BarChartOutlined style={{ color: '#FFAB00' }} />;
+      case '重复':
+        return <WarningOutlined style={{ color: '#5243AA' }} />;
+      case '安全热点':
+        return <SecurityScanOutlined style={{ color: '#3DA5F4' }} />;
+      default:
+        return <WarningOutlined style={{ color: '#5243AA' }} />;
+    }
+  };
 
   return (
     <div
@@ -24,7 +52,7 @@ const InfoCard: React.FC<{
         backgroundColor: token.colorBgContainer,
         boxShadow: token.boxShadow,
         borderRadius: '8px',
-        fontSize: '14px',
+        fontSize: '16px',
         color: token.colorTextSecondary,
         lineHeight: '22px',
         padding: '16px 19px',
@@ -41,19 +69,14 @@ const InfoCard: React.FC<{
       >
         <div
           style={{
-            width: 48,
-            height: 48,
-            lineHeight: '22px',
-            backgroundSize: '100%',
-            textAlign: 'center',
-            padding: '8px 16px 16px 12px',
-            color: '#FFF',
-            fontWeight: 'bold',
-            backgroundImage:
-              "url('https://gw.alipayobjects.com/zos/bmw-prod/daaf8d50-8e6d-4251-905d-676a24ddfa12.svg')",
+            fontSize: '50px', // 设置图标大小
+            color: token.colorIconHover, // 假设 token 有一个颜色属性专门为图标设置
+            marginRight: '0px', // 图标右侧的空间
+            display: 'flex', // 使用 flex 布局，使得图标垂直居中
+            alignItems: 'center', // 垂直居中对齐
           }}
         >
-          {index}
+          {getIcon(title)}
         </div>
         <div
           style={{
@@ -67,6 +90,17 @@ const InfoCard: React.FC<{
       </div>
       <div
         style={{
+          fontSize: '30px',
+          color: token.colorTextHeading,
+          fontWeight: 'bold',
+          marginBottom: 16,
+        }}
+      >
+        {numberCore}
+      </div>
+
+      <div
+        style={{
           fontSize: '14px',
           color: token.colorTextSecondary,
           textAlign: 'justify',
@@ -76,9 +110,6 @@ const InfoCard: React.FC<{
       >
         {desc}
       </div>
-      <a href={href} target="_blank" rel="noreferrer">
-        了解更多 {'>'}
-      </a>
     </div>
   );
 };
@@ -108,7 +139,7 @@ const Welcome: React.FC = () => {
         >
           <div
             style={{
-              fontSize: '20px',
+              fontSize: '30px',
               color: token.colorTextHeading,
             }}
           >
@@ -124,8 +155,11 @@ const Welcome: React.FC = () => {
               width: '65%',
             }}
           >
-            CodeIntegration 是一个整合了 umi，Ant Design 和 ProComponents
-            的脚手架方案。致力于在设计规范和基础组件的基础上，继续向上构建，提炼出典型模板/业务组件/配套设计资源，进一步提升企业级中后台产品设计研发过程中的『用户』和『设计者』的体验。
+            CodeIntegration 致力于开发一个基于SonarQube
+            的代码质量评分系统，目的在于实现对项目和开发者的代码质量进行量化评估。该系统通过运用SonarQube
+            进行静态代码分析，可以准确地检测出代码中的缺陷、坏味道、重复代码以及安全漏洞，并提供针对性的改进建议。利用SonarQube
+            的分析接口及git
+            的版本控制记录，该系统能为每个项目和每位开发者计算出一个反映代码质量的积分。
           </p>
           <div
             style={{
@@ -134,26 +168,17 @@ const Welcome: React.FC = () => {
               gap: 16,
             }}
           >
-            <InfoCard
-              index={1}
-              href="https://umijs.org/docs/introduce/introduce"
-              title="了解 umi"
-              desc="umi 是一个可扩展的企业级前端应用框架,umi 以路由为基础的，同时支持配置式路由和约定式路由，保证路由的功能完备，并以此进行功能扩展。"
-            />
-            <InfoCard
-              index={2}
-              title="了解 ant design"
-              href="https://ant.design"
-              desc="antd 是基于 Ant Design 设计体系的 React UI 组件库，主要用于研发企业级中后台产品。"
-            />
-            <InfoCard
-              index={3}
-              title="了解 Pro Components"
-              href="https://procomponents.ant.design"
-              desc="ProComponents 是一个基于 Ant Design 做了更高抽象的模板组件，以 一个组件就是一个页面为开发理念，为中后台开发带来更好的体验。"
-            />
+            <InfoCard numberCore="1k" title="安全" desc="" />
+            <InfoCard numberCore="1k" title="可靠性" desc="" />
+            <InfoCard numberCore="1k" title="可维护性" desc="" />
+            <InfoCard title="接受问题" numberCore="1k" desc="" />
+            <InfoCard title="覆盖率" numberCore="1k" desc="" />
+            <InfoCard title="重复" numberCore="1k" desc="" />
+            <InfoCard title="安全热点" numberCore="1k" desc="" />
           </div>
         </div>
+        <br />
+        <ListComponent />
       </Card>
     </PageContainer>
   );

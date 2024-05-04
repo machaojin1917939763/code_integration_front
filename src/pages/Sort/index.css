@@ -1,0 +1,58 @@
+.top-rankings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* 设置排名头像框的共同样式 */
+.rank-item {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+/* 第一名的样式 */
+.rank-1 {
+  border: 5px solid gold;
+  z-index: 10; /* 确保第一名在上层 */
+}
+
+/* 第二名和第三名的样式 */
+.rank-2,
+.rank-3 {
+  border: 3px solid silver;
+  z-index: 2; /* 保证第二名和第三名在同一层 */
+}
+
+/* 第三名的样式 */
+.rank-3 {
+  border-color: #cd7f32; /* 铜色 */
+}
+
+/* 调整第二名和第三名的水平位置 */
+.rank-2-wrapper,
+.rank-3-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.rank-2 {
+  margin-right: 50px; /* 第二名向右偏移 */
+}
+
+.rank-3 {
+  margin-left: 50px; /* 第三名向左偏移 */
+}
+
+/* 调整其他排名列表样式 */
+.list-ranking {
+  width: 100%;
+}

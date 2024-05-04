@@ -47,6 +47,12 @@ export default [
     component: './Project',
   },
   {
+    path: '/list',
+    name: '測試',
+    icon: 'smile',
+    component: './Sort',
+  },
+  {
     path: '/admin',
     name: 'admin',
     icon: 'crown',
