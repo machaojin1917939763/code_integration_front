@@ -1,0 +1,36 @@
+.log-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* 设定容器高度 */
+}
+
+.log-container h2 {
+  flex: 0 0 auto; /* h2标签不可伸缩，始终保持原大小 */
+  position: sticky;
+  top: 0; /* h2标签置顶 */
+  background: white; /* 避免滚动时日志内容显示在h2下面 */
+  z-index: 100; /* 确保h2标签在其他内容上方 */
+}
+
+.log-list {
+  flex: 1 1 auto; /* 日志列表可伸缩，占据剩余空间 */
+  overflow-y: auto; /* 设置垂直滚动 */
+  margin-bottom: 5px; /* 与下载按钮保持间距 */
+}
+
+.log-item-info {
+  color: green; /* INFO日志绿色 */
+}
+
+.log-item-error {
+  color: red; /* ERROR日志红色 */
+}
+
+.download-button-container {
+  flex: 0 0 auto; /* 下载按钮不可伸缩，始终保持原大小 */
+  position: sticky;
+  bottom: 0; /* 下载按钮置底 */
+  background: white; /* 避免滚动时日志内容显示在按钮下面 */
+  z-index: 100; /* 确保按钮在其他内容上方 */
+  padding: 5px 0; /* 添加内边距 */
+}

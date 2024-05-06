@@ -1,11 +1,7 @@
-import { EllipsisOutlined, SearchOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
-import { ProTable, TableDropdown } from '@ant-design/pro-components';
-import { Button, Dropdown, Input } from 'antd';
-import { getDeveloperList } from './../../services/ant-design-pro/developer'
-import { PageContainer } from '@ant-design/pro-components';
-
-
+import { PageContainer, ProTable, TableDropdown } from '@ant-design/pro-components';
+import { Avatar, Button } from 'antd';
+import { getDeveloperList } from './../../services/ant-design-pro/developer';
 
 const columns: ProColumns<API.DeveloperInfoItem>[] = [
   {
@@ -13,12 +9,20 @@ const columns: ProColumns<API.DeveloperInfoItem>[] = [
     dataIndex: 'index',
     valueType: 'indexBorder',
     width: 48,
-
+  },
+  {
+    title: '头像',
+    dataIndex: 'avatar',
+    width: 72,
+    render: (_: React.ReactNode, entity: Entity) => (
+      <Avatar shape="square" size={64} src={<img src={entity.avatar} alt="avatar" />} />
+    ),
   },
   {
     title: '姓名',
     dataIndex: 'name',
   },
+
   {
     title: '性别',
     dataIndex: 'gender',
@@ -48,18 +52,6 @@ const columns: ProColumns<API.DeveloperInfoItem>[] = [
     dataIndex: 'email',
   },
   {
-    title: '项目ID',
-    dataIndex: 'projectId',
-    valueType: 'digit',
-    hideInSearch: true,
-  },
-  {
-    title: 'BUG ID',
-    dataIndex: 'bugId',
-    valueType: 'digit',
-    hideInSearch: true,
-  },
-  {
     title: '积分',
     dataIndex: 'score',
     valueType: 'digit',
@@ -67,38 +59,14 @@ const columns: ProColumns<API.DeveloperInfoItem>[] = [
     hideInSearch: true,
   },
   {
-    title: '创建者',
-    dataIndex: 'creator',
-    ellipsis: true,
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'createdAt',
-    valueType: 'dateTime',
-    sorter: true,
-    hideInSearch: true,
-  },
-  {
-    title: '更新者',
-    dataIndex: 'updater',
-    ellipsis: true,
-  },
-  {
-    title: '更新时间',
-    dataIndex: 'updatedAt',
-    valueType: 'dateTime',
-    sorter: true,
-    hideInSearch: true,
-  },
-  {
     title: '操作',
     valueType: 'option',
     key: 'option',
-    render: (text, record, _, action) => [
+    render: (record, _, action) => [
       <a
         key="editable"
         onClick={() => {
-          action?.startEditable?.(record.name);
+          action?.startEditable?.(record.id);
         }}
       >
         编辑
@@ -118,13 +86,12 @@ const columns: ProColumns<API.DeveloperInfoItem>[] = [
   },
 ];
 
-
 export default () => {
   return (
     <PageContainer>
       <ProTable<API.DeveloperInfoItem>
         columns={columns}
-        request={async (params, sorter, filter) => {
+        request={async (params) => {
           // 表单搜索项会从 params 传入，传递给后端接口。
           console.log(params);
           try {
@@ -160,40 +127,11 @@ export default () => {
           tooltip: '所有的开发人员',
         }}
         toolBarRender={() => [
-          <Button key="danger" danger>
-            危险按钮
-          </Button>,
-          <Button key="show">查看日志</Button>,
           <Button type="primary" key="primary">
-            创建应用
+            添加开发者
           </Button>,
-
-          <Dropdown
-            key="menu"
-            menu={{
-              items: [
-                {
-                  label: '1st item',
-                  key: '1',
-                },
-                {
-                  label: '2nd item',
-                  key: '2',
-                },
-                {
-                  label: '3rd item',
-                  key: '3',
-                },
-              ],
-            }}
-          >
-            <Button>
-              <EllipsisOutlined />
-            </Button>
-          </Dropdown>,
         ]}
       />
     </PageContainer>
-
   );
 };

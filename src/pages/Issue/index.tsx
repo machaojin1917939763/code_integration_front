@@ -1,10 +1,8 @@
-import React from 'react';
-import { EllipsisOutlined, SearchOutlined } from '@ant-design/icons';
+import { EllipsisOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
-import { ProTable, TableDropdown } from '@ant-design/pro-components';
-import { Button, Dropdown, Input } from 'antd';
+import { PageContainer, ProTable, TableDropdown } from '@ant-design/pro-components';
+import { Button, Dropdown } from 'antd';
 import { getIssueList } from '../../services/ant-design-pro/issue';
-import { PageContainer } from '@ant-design/pro-components';
 
 // 表格列的配置
 const columns: ProColumns<API.IssueTrackerItem>[] = [
@@ -45,6 +43,11 @@ const columns: ProColumns<API.IssueTrackerItem>[] = [
     key: 'creator',
   },
   {
+    title: '问题创建者',
+    dataIndex: 'issueCreator',
+    key: 'issueCreator',
+  },
+  {
     title: '创建时间',
     dataIndex: 'createdAt',
     key: 'createdAt',
@@ -81,7 +84,7 @@ export default () => {
     <PageContainer>
       <ProTable<API.IssueTrackerItem>
         columns={columns}
-        request={async (params, sorter, filter) => {
+        request={async (params) => {
           // 表单搜索项会从 params 传入，传递给后端接口。
           console.log(params);
           try {
@@ -150,6 +153,5 @@ export default () => {
         ]}
       />
     </PageContainer>
-
   );
 };

@@ -47,8 +47,8 @@ export default [
     component: './Project',
   },
   {
-    path: '/list',
-    name: '測試',
+    path: '/leaderboard',
+    name: 'leaderboard',
     icon: 'smile',
     component: './Sort',
   },
