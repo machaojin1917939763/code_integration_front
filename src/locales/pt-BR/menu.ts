@@ -1,4 +1,8 @@
 export default {
+  'menu.developer': 'Gerenciamento de Desenvolvedores',
+  'menu.issue': 'Gerenciamento de Problemas',
+  'menu.project': 'Gerenciamento de Projeto',
+  'm!enu.leaderboard': 'Classificação',
   'menu.welcome': 'Welcome',
   'menu.more-blocks': 'More Blocks',
   'menu.home': 'Início',

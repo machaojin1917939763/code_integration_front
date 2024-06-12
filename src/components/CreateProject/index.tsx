@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { ModalForm, ProForm, ProFormText } from '@ant-design/pro-components';
+import { ModalForm, ProForm, ProFormText ,ProFormSelect} from '@ant-design/pro-components';
 import { Button, Form, message } from 'antd';
 import { addProject } from '../../services/ant-design-pro/project';
 const waitTime = (time: number = 100) => {
@@ -55,17 +55,32 @@ export const CreateProject: React.FC = () => {
           name="name"
           label="项目名称"
           tooltip="最长为 100 位"
-          placeholder="请输入项目Git地址"
+          placeholder="请输入项目名称"
         />
 
         <ProFormText
           width="md"
           name="url"
           label="项目Git地址"
-          tooltip="可输入GitLab、GitHUb、Gitee、Git私服等地址"
+          tooltip="可输入GitLab、GitHub、Gitee、Git私服等地址"
         />
 
-        <ProFormText width="md" name="type" label="项目类型" tooltip="Maven、Node" />
+        <ProFormSelect
+          width="md"
+          name="type"
+          label="项目类型"
+          tooltip="选择项目类型"
+          options={[
+            { value: 'Maven', label: 'Maven' },
+            { value: 'Node', label: 'Node' },
+            { value: 'Python', label: 'Python' },
+            { value: 'C++', label: 'C++' },
+            { value: 'C#', label: 'C#' },
+            { value: 'C', label: 'C' },
+            { value: '其他', label: '其他' },
+          ]}
+        />
+
 
         <ProFormText width="md" name="responsiblePerson" label="项目负责人" tooltip="项目负责人" />
       </ProForm.Group>

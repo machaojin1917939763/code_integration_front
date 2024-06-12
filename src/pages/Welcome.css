@@ -1,0 +1,38 @@
+/* General Layout and Background */
+.dashboard-card-wrapper {
+  margin: 20px;
+  background: #f7f8fa; /* Soft gray background for light mode */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Card Styling */
+.dashboard-card-wrapper .ant-card {
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none; /* Removing default borders */
+  overflow: hidden; /* Ensures children elements like tables do not break border-radius */
+}
+
+.dashboard-card-wrapper .ant-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Table and Scrolling Container Styling */
+.dashboard-table-wrapper {
+  max-height: 600px; /* Important for scrolling functionality */
+  overflow-y: auto; /* Allows for vertical scrolling when content overflows */
+  border: 1px solid #e8e8e8; /* Subtle border for visual structure */
+  background: #fff; /* Ensures table background is consistent */
+  border-radius: 4px; /* Consistency in design */
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+  .dashboard-card-wrapper .ant-col {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+}

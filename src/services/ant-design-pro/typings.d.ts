@@ -121,15 +121,20 @@ declare namespace API {
     issueType?: string; // 问题类型
     description?: string; // 问题描述
     resolver?: string; // 问题解决人
-    score?: number; // 问题分数
+    score?: string; // 问题分数
     isResolved?: number; // 是否解决
+    issueCreator?: string; // 是否解决
+    projectName?: string; // 是否解决
     creator?: string; // 创建者
     createdAt?: string; // 创建时间，根据实际情况可能需要更改为 Date 类型或其他
     updater?: string; // 更新者
     updatedAt?: string; // 更新时间，根据实际情况可能需要更改为 Date 类型或其他
+    record?: any;
+    projectName?: any;
+    component?: any;
   };
   type ProjectItem = {
-    key?: number;
+    key?: string;
     name?: string; // 项目名称
     url?: string; // 项目地址
     type?: string; // 项目类型
@@ -141,5 +146,15 @@ declare namespace API {
     createdAt?: string; // 创建时间，根据实际情况可能需要更改为 Date 类型或其他
     updater?: string; // 更新者
     updatedAt?: string; // 更新时间，根据实际情况可能需要更改为 Date 类型或其他
+    record?: any;
+    wsStatus?: any;
+  };
+
+  // 表格列的配置
+  type Result = {
+    code?: number;
+    message?: string
+    result?: any;
+    type?: string;
   };
 }

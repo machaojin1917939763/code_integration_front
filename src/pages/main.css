@@ -1,0 +1,39 @@
+/* 容器基本样式，添加细致的渐变背景 */
+.pro-table-container {
+  padding: 24px;
+  background: linear-gradient(145deg, #f9f9f9, #ffffff);
+  border-radius: 8px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12); /* 细致而富有层次的阴影 */
+  overflow: hidden;
+  transition: all 0.3s ease; /* 平滑过渡所有变化 */
+}
+
+/* 行样式及悬停效果，引入边框动效 */
+.pro-table-container .ant-table-row {
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease;
+  border-radius: 4px;
+  border: 2px solid transparent; /* 初始化透明边框 */
+}
+
+.pro-table-container .ant-table-row:hover {
+  transform: translateY(-10px); /* 上移效果，增加交互感 */
+  box-shadow: 0 12px 24px rgba(188, 229, 242, 0.4); /* 明亮的蓝色阴影 */
+  background-color: #dce8fa; /* 柔和的悬停背景色 */
+  border-color: #b0c4de; /* 优雅的边框颜色变化 */
+}
+
+/* 响应式设计调整，保持可读性和整洁性 */
+@media (max-width: 768px) {
+  .pro-table-container {
+    padding: 16px; /* 调整内边距以适应屏幕大小 */
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1); /* 调整阴影以减少视觉压力 */
+  }
+  .pro-table-container .ant-table-row {
+    border-radius: 3px; /* 轻微调整圆角 */
+  }
+}
+
+/* 维持表格整体风格一臀 */
+.pro-table-container .ant-table {
+  border-radius: 4px;
+}

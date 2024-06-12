@@ -1,4 +1,4 @@
-import { Button, List, Progress } from 'antd';
+import { Button, List, Progress, message } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import './index.css';
 
@@ -6,16 +6,20 @@ interface LogMessage {
   message: string;
 }
 
-export const ChatBox: React.FC<API.ProjectItem> = ({ record }) => {
+
+export const ChatBox: React.FC<API.ProjectItem> = ({ record, wsStatus }) => {
   const [logs, setLogs] = useState<LogMessage[]>([]);
-  const [progress, setProgress] = useState(0); // 使用状态来跟踪进度
+  const [progress, setProgress] = useState(0); // 用于跟踪进度的数值
+  const [progressStatus, setProgressStatus] = useState('active'); // 用于跟踪进度的状态，初始值设为 'active'
   const listEndRef = useRef(null); // 创建一个ref来引用列表末尾的元素
+  const wsRef = useRef<WebSocket | null>(null); // 用来引用WebSocket对象
+
 
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:8080/create_project');
 
     ws.onopen = () => {
-      ws.send(JSON.stringify(record));
+      ws.send(JSON.stringify(record.props.record));
     };
 
     ws.onmessage = (event) => {
@@ -23,8 +27,17 @@ export const ChatBox: React.FC<API.ProjectItem> = ({ record }) => {
       const logMessage: LogMessage = { message: data };
       // 尝试将接收到的数据转换成数字作为进度
       const potentialProgress = Number(data);
+      const containsChinese = /[\u4e00-\u9fa5]/.test(data);
+      if (containsChinese) {
+        message.info(data);
+      }
       if (!isNaN(potentialProgress)) {
         setProgress(potentialProgress); // 更新进度
+      } else if (data === "exception") {
+        setProgressStatus("exception");
+      } else if (data === "SonarQube分析结束") {
+        message.success("分析成功，请等待20秒后查询问题！");
+        setLogs((prevLogs) => [...prevLogs, logMessage]);
       } else {
         setLogs((prevLogs) => [...prevLogs, logMessage]);
       }
@@ -41,12 +54,18 @@ export const ChatBox: React.FC<API.ProjectItem> = ({ record }) => {
 
   useEffect(() => {
     if (listEndRef.current) {
-      const element = listEndRef.current;
+      const element: any = listEndRef.current;
       element.scrollTop = element.scrollHeight;
     }
   }, [logs]); // 依赖于logs数组来触发滚动
 
-  // 省略了下载日志的函数...
+  useEffect(() => {
+    if (wsStatus) {
+      // 当wsStatus为true时，关闭WebSocket连接
+      wsRef.current?.close();
+    }
+  }, [wsStatus]); // 依赖于wsStatus
+
   const downloadLogs = () => {
     // 将日志数组转换为字符串，每条消息占一行
     const logString = logs.map((log) => log.message).join('\n');
@@ -64,7 +83,7 @@ export const ChatBox: React.FC<API.ProjectItem> = ({ record }) => {
   return (
     <div className="log-container">
       <h2>项目分析进度</h2>
-      <Progress percent={progress} />
+      <Progress percent={progress} status={progressStatus} />
       <div ref={listEndRef} className="log-list">
         <List
           dataSource={logs}

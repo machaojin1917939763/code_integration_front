@@ -1,4 +1,8 @@
 export default {
+  'menu.developer': 'ডেভেলপার পরিচালনা',
+  'menu.issue': 'মেরামতের জন্য বিষয় পরিচালনা',
+  'menu.project': 'প্রকল্প পরিচালনা',
+  'menu.leaderboard': 'স্কোরবোর্ড',
   'menu.welcome': 'স্বাগতম',
   'menu.more-blocks': 'আরও ব্লক',
   'menu.home': 'নীড়',

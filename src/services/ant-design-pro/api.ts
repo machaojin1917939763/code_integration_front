@@ -13,6 +13,15 @@ export async function currentUser(options?: { [key: string]: any }) {
   });
 }
 
+export async function getAdmin(options?: { [key: string]: any }) {
+  return request<{
+    data: API.CurrentUser;
+  }>('/api/login/admin', {
+    method: 'GET',
+    ...(setAuthToken(options)),
+  });
+}
+
 /** 退出登录接口 POST /api/login/outLogin */
 export async function outLogin(options?: { [key: string]: any }) {
    // 清除保存的 token

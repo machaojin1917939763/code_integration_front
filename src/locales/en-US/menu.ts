@@ -1,4 +1,8 @@
 export default {
+  'menu.developer': 'Developer Management',
+  'menu.issue': 'Issue Management',
+  'menu.project': 'Project Management',
+  'menu.leaderboard': 'Leaderboard',
   'menu.welcome': 'Welcome',
   'menu.more-blocks': 'More Blocks',
   'menu.home': 'Home',

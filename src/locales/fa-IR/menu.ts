@@ -1,4 +1,8 @@
 export default {
+  'menu.developer': 'مدیریت توسعه‌دهندگان',
+  'menu.issue': 'مدیریت مشکلات',
+  'menu.project': 'مدیریت پروژه',
+  'menu.leaderboard': 'جدول امتیازات',
   'menu.welcome': 'خوش آمدید',
   'menu.more-blocks': 'بلوک های بیشتر',
   'menu.home': 'خانه',

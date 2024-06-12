@@ -28,3 +28,12 @@ export async function addProject(body: any) {
     ...setAuthToken(newBody),
   });
 }
+export async function refreshIssue(body: any) {
+  return request<{
+    data: API.CurrentUser;
+  }>('/api/sonar/issue/refresh_issue', {
+    method: 'POST',
+    data: body,
+    ...setAuthToken(body),
+  });
+}

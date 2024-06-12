@@ -1,4 +1,8 @@
 export default {
+  'menu.developer': '開發者管理',
+  'menu.issue': '待修復問題管理',
+  'menu.project': '項目管理',
+  'menu.leaderboard': '積分排行榜',
   'menu.welcome': '歡迎',
   'menu.more-blocks': '更多區塊',
   'menu.home': '首頁',

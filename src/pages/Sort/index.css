@@ -1,58 +1,132 @@
-.top-rankings {
+.leaderboard-container {
+  padding: 20px;
+  background-color: #f7f9fc; /* 更柔和的背景色 */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.top-players {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
   margin-bottom: 20px;
 }
 
-/* 设置排名头像框的共同样式 */
-.rank-item {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+.player-card {
+  position: relative; /* 为排名标签设置相对定位基准 */
+  width: calc(100% / 3 - 40px);
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1); /* 更轻的阴影效果 */
+  border-radius: 20px;
+  background-color: #ffffff; /* 卡片使用纯白色背景 */
+  transition: transform 0.3s ease; /* 平滑放大动效 */
+}
+
+.player-card:hover {
+  transform: scale(1.05); /* 鼠标悬停时轻微放大 */
+}
+
+/* 修改前三名的背景色 */
+.gold {
+  background-color: #4648db; /* 亮金色 */
+}
+
+.silver {
+  background-color: #8b88e8; /* 柔和银色 */
+}
+
+.bronze {
+  background-color: #6470e2; /* 鲜明铜色 */
+}
+
+.other-players {
+  max-width: 100%;
+  width: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.player-card-other {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1); /* 更轻的阴影效果 */
+  border-radius: 10px;
+  background-color: #ffffff; /* 统一其他卡片的背景色 */
+}
+
+@media (max-width: 768px) {
+  .top-players {
+    flex-direction: column;
+  }
+  .player-card {
+    width: 80%; /* 增大宽度以适应屏幕 */
+  }
+  .player-card-other {
+    padding: 10px; /* 增加内边距以改善触感 */
+  }
+}
+
+.player-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333333; /* 深色的字体更容易阅读 */
+}
+
+.player-score {
+  font-size: 18px;
+  color: #0d0d0d; /* 亮红色，以提供更好的视觉突出 */
+}
+
+/* 前三名玩家 */
+.top-players .player-card {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
-  background-size: cover;
-  background-position: center;
 }
 
-/* 第一名的样式 */
-.rank-1 {
-  border: 5px solid gold;
-  z-index: 10; /* 确保第一名在上层 */
+.top-players .player-name {
+  margin-top: 10px;
+  color: #333333; /* 保持与其他名字相同的颜色 */
+  font-size: 30px;
 }
 
-/* 第二名和第三名的样式 */
-.rank-2,
-.rank-3 {
-  border: 3px solid silver;
-  z-index: 2; /* 保证第二名和第三名在同一层 */
+.top-players .player-score {
+  margin-bottom: 10px;
 }
 
-/* 第三名的样式 */
-.rank-3 {
-  border-color: #cd7f32; /* 铜色 */
+/* 排名标签样式 */
+.rank-badge {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  background-color: #ffffff;
+  color: #333333;
+  padding: 5px 10px;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+  font-weight: bold;
 }
-
-/* 调整第二名和第三名的水平位置 */
-.rank-2-wrapper,
-.rank-3-wrapper {
-  display: flex;
-  justify-content: center;
+/* 其他玩家卡片的动态效果 */
+.player-card-other {
   width: 100%;
+  text-align: left;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px 0 rgba(176, 216, 233, 0.1); /* 更轻的阴影效果 */
+  border-radius: 10px;
+  background-color: #ffffff; /* 统一其他卡片的背景色 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* 平滑的变换和阴影效果 */
 }
 
-.rank-2 {
-  margin-right: 50px; /* 第二名向右偏移 */
+.player-card-other:hover {
+  transform: translateY(-15px); /* 上移效果 */
+  box-shadow: 0 4px 8px rgba(158, 223, 241, 0.2); /* 悬停时增强阴影 */
 }
 
-.rank-3 {
-  margin-left: 50px; /* 第三名向左偏移 */
-}
-
-/* 调整其他排名列表样式 */
-.list-ranking {
-  width: 100%;
-}

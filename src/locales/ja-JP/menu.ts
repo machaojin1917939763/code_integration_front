@@ -1,4 +1,8 @@
 export default {
+  'menu.developer': '開発者管理',
+  'menu.issue': '未解決問題の管理',
+  'menu.project': 'プロジェクト管理',
+  'menu.leaderboard': 'リーダーボード',
   'menu.welcome': 'ようこそ',
   'menu.more-blocks': 'その他のブロック',
   'menu.home': 'ホーム',

@@ -1,8 +1,8 @@
 export default {
   'menu.welcome': '欢迎',
-  'menu.developer': '开发者信息',
-  'menu.issue': '待修复问题',
-  'menu.project': '开发项目',
+  'menu.developer': '开发者管理',
+  'menu.issue': '待修复问题管理',
+  'menu.project': '项目管理',
   'menu.more-blocks': '更多区块',
   'menu.home': '首页',
   'menu.admin': '管理页',

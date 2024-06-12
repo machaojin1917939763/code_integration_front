@@ -16,6 +16,7 @@ export const Loading: React.FC<API.ProjectItem> = ({ record }) => {
     <>
       <Space>
         <Button
+          key="startSonarQube"
           type="link"
           size="small"
           onClick={() => {
@@ -33,7 +34,7 @@ export const Loading: React.FC<API.ProjectItem> = ({ record }) => {
         open={open}
         key="top"
       >
-        <ChatBox record={record} />
+        <ChatBox record={record}  wsStatus={open}/>
       </Drawer>
     </>
   );

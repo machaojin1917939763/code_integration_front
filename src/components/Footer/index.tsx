@@ -12,19 +12,19 @@ const Footer: React.FC = () => {
         {
           key: 'CodeIntegration',
           title: 'CodeIntegration',
-          href: 'https://pro.ant.design',
+          href: '#',
           blankTarget: true,
         },
         {
           key: 'github',
           title: <GithubOutlined />,
-          href: 'https://github.com/ant-design/ant-design-pro',
+          href: '#',
           blankTarget: true,
         },
         {
-          key: 'Ant Design',
-          title: 'Ant Design',
-          href: 'https://ant.design',
+          key: 'Ma Chaojin',
+          title: 'Ma Chaojin',
+          href: 'https://maapp.top',
           blankTarget: true,
         },
       ]}

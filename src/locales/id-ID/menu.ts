@@ -1,4 +1,8 @@
 export default {
+  'menu.developer': 'Manajemen Pengembang',
+  'menu.issue': 'Manajemen Masalah',
+  'menu.project': 'Manajemen Proyek',
+  'menu.leaderboard': 'Papan Peringkat',
   'menu.welcome': 'Selamat Datang',
   'menu.more-blocks': 'Blocks Lainnya',
   'menu.home': 'Halaman Awal',
